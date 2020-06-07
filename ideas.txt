@@ -1,0 +1,14 @@
+DELETE THIS BEFORE RELEASING!
+
+Store your score in a json file, maybe have a
+save button for better optimization than just saving it every single frame! Make the json file read-only so people
+don't cheat.
+
+^^ Maybe don't do that idk.
+
+
+Add an amount that tells you how many of the thing you have!
+
+
+Add some pygame_gui cool stuff at the beginning so that it has an introduction/tutorial.
+
