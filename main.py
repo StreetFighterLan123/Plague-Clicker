@@ -183,6 +183,9 @@ mars_infections_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
 stats_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((720, 550), (80, 50)), text='Stats',
                                             manager=manager)
 
+ascend_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((720, 500), (80, 50)), text='Ascend',
+                                             manager=manager)
+
 infectionsFont = pygame.font.Font("freesansbold.ttf", 24)
 infection_textX = 25
 infection_textY = 530
@@ -275,7 +278,7 @@ stageNineX = 263
 stageNineY = 0
 
 stageTenX = 250
-stageTenY = -28
+stageTenY = -40
 
 origImg = pygame.image.load('virus.png')
 stageOneImg = pygame.transform.scale(origImg, (50, 50))
@@ -298,9 +301,24 @@ def stage(x, y, img):
 
 success_sound = pygame.mixer.Sound('success.wav')
 insufficient_sound = pygame.mixer.Sound('insufficient.wav')
+insufficient_font = pygame.font.Font('freesansbold.ttf', 16)
+affordable_font = pygame.font.Font('freesansbold.ttf', 16)
+
+
+def show_insufficient():
+    insufficient_text = insufficient_font.render("Insufficient Funds!", True, (255, 255, 255))
+    screen.blit(insufficient_text, (0, 30))
+
+
+def show_affordable():
+    affordable_text = affordable_font.render("Affordable", True, (255, 255, 255))
+    screen.blit(affordable_text, (0, 30))
+
 
 local_high = 0
 show_stats = True
+showInsufficient = False
+showAffordable = False
 
 running = True
 
@@ -322,6 +340,12 @@ while running:
                         show_stats = False
                     else:
                         show_stats = True
+                if event.ui_element == ascend_button:
+                    if infections >= 50000000000:  # fifty billion
+                        pygame.mixer.Sound.play(success_sound)
+                        # Ascension code.
+                    else:
+                        pygame.mixer.Sound.play(insufficient_sound)
                 if event.ui_element == click_button:
                     infections += click_power
                     # Add something somehow so that there is a delay when clicking.
@@ -396,31 +420,79 @@ while running:
                         pygame.mixer.Sound.play(success_sound)
                     else:
                         pygame.mixer.Sound.play(insufficient_sound)
+
             if event.user_type == pygame_gui.UI_BUTTON_ON_HOVERED:
                 # Menu sound
                 if event.ui_element != click_button and event.ui_element != stats_button:
                     pygame.mixer.Sound.play(blipSound)
+                if event.ui_element == ascend_button:
+                    if infections < 50000000000:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == airborne_button:
                     showingAirborne = True
+                    if infections < airbornePrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == hard_to_detect_button:
                     showing_hard_to_detect = True
+                    if infections < hardToDetectPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == quicker_spread_button:
                     showing_quicker_spread = True
+                    if infections < quickerSpreadPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == epidemic_button:
                     showing_epidemic = True
+                    if infections < epidemicPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == pandemic_button:
                     showing_pandemic = True
+                    if infections < pandemicPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == quarter_plague_button:
                     showing_quarter = True
+                    if infections < quarterPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == half_plague_button:
                     showing_half = True
+                    if infections < halfPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == full_plague_button:
                     showing_fullPlague = True
+                    if infections < fullPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == planetary_spread_button:
                     showing_planetary = True
+                    if infections < planetaryPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
                 if event.ui_element == mars_infections_button:
                     showing_mars = True
+                    if infections < marsPrice:
+                        showInsufficient = True
+                    else:
+                        showAffordable = True
             if event.user_type == pygame_gui.UI_BUTTON_ON_UNHOVERED:
+                showInsufficient = False
+                showAffordable = False
                 if event.ui_element == airborne_button:
                     showingAirborne = False
                 if event.ui_element == hard_to_detect_button:
@@ -448,6 +520,10 @@ while running:
     keys = pygame.key.get_pressed()
     manager.draw_ui(screen)
 
+    if showAffordable:
+        show_affordable()
+    if showInsufficient:
+        show_insufficient()
     if showingAirborne:
         show_airborne_text()
     if showing_hard_to_detect:
@@ -481,6 +557,7 @@ while running:
     #   print(local_high) -> debug
 
     if local_high >= airbornePrice and stageOne_once:
+        pygame.mixer.Sound.play(lvl_up_sound)
         stageOne = True
         stageOne_once = False
     if local_high >= hardToDetectPrice and stageTwo_once:
