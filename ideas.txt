@@ -1,8 +1,5 @@
 DELETE THIS BEFORE RELEASING!
 
-Make the affordable and insufficient funds thing for the ascension also!
-Make the ascension text look better.
-
 
 Store your score in a json file, maybe have a
 save button for better optimization than just saving it every single frame! Make the json file read-only so people
