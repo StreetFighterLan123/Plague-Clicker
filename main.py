@@ -153,6 +153,21 @@ def show_mars_text():
 showing_mars = False
 # And so on
 
+ascension_textX = 0
+ascension_textY = 0
+ascension_textX_two = 0
+ascension_textY_two = 15
+
+ascensionFont = pygame.font.Font("freesansbold.ttf", 16)
+ascensionFont_two = pygame.font.Font("freesansbold.ttf", 14)
+def show_ascension_text():
+    ascension_text = ascensionFont.render("Ascension will reset your CPS and Infections, but your click power will double!", True, (255,255,255))
+    screen.blit(ascension_text, (ascension_textX, ascension_textY))
+    ascension_text_two = ascensionFont_two.render("Trust me, it adds up!", True, (255,255,255))
+    screen.blit(ascension_text_two, (ascension_textX_two, ascension_textY_two))
+    
+showingAscension = False
+
 hard_to_detect_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((660, 50), (140, 50)), text='Hard to '
                                                                                                            'Detect',
                                                      manager=manager)
@@ -423,9 +438,10 @@ while running:
 
             if event.user_type == pygame_gui.UI_BUTTON_ON_HOVERED:
                 # Menu sound
-                if event.ui_element != click_button and event.ui_element != stats_button:
+                if event.ui_element != click_button and event.ui_element != stats_button and event.ui_element != ascend_button:
                     pygame.mixer.Sound.play(blipSound)
                 if event.ui_element == ascend_button:
+                    showingAscension = True
                     if infections < 50000000000:
                         showInsufficient = True
                     else:
@@ -493,6 +509,8 @@ while running:
             if event.user_type == pygame_gui.UI_BUTTON_ON_UNHOVERED:
                 showInsufficient = False
                 showAffordable = False
+                if event.ui_element == ascend_button:
+                    showingAscension = False
                 if event.ui_element == airborne_button:
                     showingAirborne = False
                 if event.ui_element == hard_to_detect_button:
@@ -520,6 +538,8 @@ while running:
     keys = pygame.key.get_pressed()
     manager.draw_ui(screen)
 
+    if showingAscension:
+        show_ascension_text()
     if showAffordable:
         show_affordable()
     if showInsufficient:
