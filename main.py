@@ -158,14 +158,15 @@ ascension_textY = 0
 ascension_textX_two = 0
 ascension_textY_two = 15
 
-ascensionFont = pygame.font.Font("freesansbold.ttf", 16)
-ascensionFont_two = pygame.font.Font("freesansbold.ttf", 14)
+ascensionFont = pygame.font.Font("freesansbold.ttf", 15)
+
+
 def show_ascension_text():
-    ascension_text = ascensionFont.render("Ascension will reset your CPS and Infections, but your click power will double!", True, (255,255,255))
+    ascension_text = ascensionFont.render("Ascension will reset your CPS and Infections, but your click power will "
+                                          "double. || Price: 50B", True, (255, 255, 255))
     screen.blit(ascension_text, (ascension_textX, ascension_textY))
-    ascension_text_two = ascensionFont_two.render("Trust me, it adds up!", True, (255,255,255))
-    screen.blit(ascension_text_two, (ascension_textX_two, ascension_textY_two))
-    
+
+
 showingAscension = False
 
 hard_to_detect_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((660, 50), (140, 50)), text='Hard to '
@@ -198,8 +199,9 @@ mars_infections_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect(
 stats_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((720, 550), (80, 50)), text='Stats',
                                             manager=manager)
 
-ascend_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((720, 500), (80, 50)), text='Ascend',
+ascend_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((642, 550), (80, 50)), text='Ascend',
                                              manager=manager)
+# 720, 500 originally
 
 infectionsFont = pygame.font.Font("freesansbold.ttf", 24)
 infection_textX = 25
@@ -357,6 +359,9 @@ while running:
                         show_stats = True
                 if event.ui_element == ascend_button:
                     if infections >= 50000000000:  # fifty billion
+                        cps = 0
+                        infections = 0
+                        click_power *= 2
                         pygame.mixer.Sound.play(success_sound)
                         # Ascension code.
                     else:
@@ -442,7 +447,7 @@ while running:
                     pygame.mixer.Sound.play(blipSound)
                 if event.ui_element == ascend_button:
                     showingAscension = True
-                    if infections < 50000000000:
+                    if infections < 50000000000: # 50B
                         showInsufficient = True
                     else:
                         showAffordable = True
