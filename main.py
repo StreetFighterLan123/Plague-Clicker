@@ -337,6 +337,46 @@ show_stats = True
 showInsufficient = False
 showAffordable = False
 
+# Adding the messages, or "headlines".
+headlineFont = pygame.font.Font('freesansbold.ttf', 15)
+
+headline = 0
+
+headlineX = 0
+headlineY = 570
+
+airborne_headline = headlineFont.render("A new plague-like virus has emerged with a few cases, will this affect "
+                                        "anything?", True, (255, 255, 255))
+hardToDetect_headline = headlineFont.render("The plague-like virus is becoming harder to detect,"
+                                            " make sure to wash your hands!", True, (255, 255, 255))
+quickerSpread_headline = headlineFont.render("This plague is spreading quickly, and "
+                                             "the first deaths have been confirmed!", True, (255, 255, 255))
+epidemic_headline = headlineFont.render("An outbreak has occurred in Frina! The deaths are piling up!"
+                                        " Stay safe everyone! ", True, (255, 255, 255))
+pandemic_headline = headlineFont.render("The plague is a pandemic! The "
+                                        "world "
+                                        "is currently under lockdown!", True, (255, 255, 255))
+quarter_headline = headlineFont.render("The plague has killed 6.25 million people! HELP!", True, (255, 255, 255))
+
+half_headline = headlineFont.render("The plague has accumulated 12.5 million deaths, is humanity doomed?", True, (255, 255, 255))
+def draw_headline():
+    # Counts from1
+    if headline == 1:
+        screen.blit(airborne_headline, (headlineX, headlineY))
+    if headline == 2:
+        screen.blit(hardToDetect_headline, (headlineX, headlineY))
+    if headline == 3:
+        screen.blit(quickerSpread_headline, (headlineX, headlineY))
+    if headline == 4:
+        screen.blit(epidemic_headline, (headlineX, headlineY))
+    if headline == 5:
+        screen.blit(pandemic_headline, (headlineX, headlineY))
+    if headline == 6:
+        screen.blit(quarter_headline, (headlineX, headlineY))
+    if headline == 7:
+        screen.blit(half_headline, (headlineX, headlineY))
+
+
 running = True
 
 while running:
@@ -447,7 +487,7 @@ while running:
                     pygame.mixer.Sound.play(blipSound)
                 if event.ui_element == ascend_button:
                     showingAscension = True
-                    if infections < 50000000000: # 50B
+                    if infections < 50000000000:  # 50B
                         showInsufficient = True
                     else:
                         showAffordable = True
@@ -455,62 +495,82 @@ while running:
                     showingAirborne = True
                     if infections < airbornePrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == hard_to_detect_button:
                     showing_hard_to_detect = True
                     if infections < hardToDetectPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == quicker_spread_button:
                     showing_quicker_spread = True
                     if infections < quickerSpreadPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == epidemic_button:
                     showing_epidemic = True
                     if infections < epidemicPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == pandemic_button:
                     showing_pandemic = True
                     if infections < pandemicPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == quarter_plague_button:
                     showing_quarter = True
                     if infections < quarterPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == half_plague_button:
                     showing_half = True
                     if infections < halfPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == full_plague_button:
                     showing_fullPlague = True
                     if infections < fullPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == planetary_spread_button:
                     showing_planetary = True
                     if infections < planetaryPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
                 if event.ui_element == mars_infections_button:
                     showing_mars = True
                     if infections < marsPrice:
                         showInsufficient = True
+                        showAffordable = False
                     else:
                         showAffordable = True
+                        showInsufficient = False
             if event.user_type == pygame_gui.UI_BUTTON_ON_UNHOVERED:
                 showInsufficient = False
                 showAffordable = False
@@ -585,51 +645,63 @@ while running:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageOne = True
         stageOne_once = False
+        headline = 1
     if local_high >= hardToDetectPrice and stageTwo_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageOne = False
         stageTwo = True
         stageTwo_once = False
+        headline = 2
     if local_high >= quickerSpreadPrice and stageThree_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageTwo = False
         stageThree = True
         stageThree_once = False
+        headline = 3
     if local_high >= epidemicPrice and stageFour_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageThree = False
         stageFour = True
         stageFour_once = False
+        headline = 4
     if local_high >= pandemicPrice and stageFive_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageFour = False
         stageFive = True
         stageFive_once = False
+        headline = 5
     if local_high >= quarterPrice and stageSix_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageFive = False
         stageSix = True
         stageSix_once = False
+        headline = 6
     if local_high >= halfPrice and stageSeven_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageSix = False
         stageSeven = True
         stageSeven_once = False
+        headline = 7
     if local_high >= fullPrice and stageEight_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageSeven = False
         stageEight = True
         stageEight_once = False
+        headline = 8
     if local_high >= planetaryPrice and stageNine_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageEight = False
         stageNine = True
         stageNine_once = False
+        headline = 9
     if local_high >= marsPrice and stageTen_once:
         pygame.mixer.Sound.play(lvl_up_sound)
         stageNine = False
         stageTen = True
         stageTen_once = False
+        headline = 10
+
+    draw_headline()
 
     if stageOne:
         stage(stageOneX, stageOneY, stageOneImg)
