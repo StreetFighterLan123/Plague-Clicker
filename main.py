@@ -155,8 +155,6 @@ showing_mars = False
 
 ascension_textX = 0
 ascension_textY = 0
-ascension_textX_two = 0
-ascension_textY_two = 15
 
 ascensionFont = pygame.font.Font("freesansbold.ttf", 15)
 
@@ -358,7 +356,17 @@ pandemic_headline = headlineFont.render("The plague is a pandemic! The "
                                         "is currently under lockdown!", True, (255, 255, 255))
 quarter_headline = headlineFont.render("The plague has killed 6.25 million people! HELP!", True, (255, 255, 255))
 
-half_headline = headlineFont.render("The plague has accumulated 12.5 million deaths, is humanity doomed?", True, (255, 255, 255))
+half_headline = headlineFont.render("The plague has accumulated 12.5 million deaths, is humanity doomed?", True,
+                                    (255, 255, 255))
+full_headline = headlineFont.render("The plague has killed 25 million people, am I going to survive..?", True,
+                                    (255, 255, 255))
+
+planetary_headline = headlineFont.render("The plague has killed everyone on earth, and is spreading to other planets?!",
+                                         True, (255, 255, 255))
+
+mars_headline = headlineFont.render("The virus is killing aliens on mars!", True, (255, 255, 255))
+
+
 def draw_headline():
     # Counts from1
     if headline == 1:
@@ -375,6 +383,12 @@ def draw_headline():
         screen.blit(quarter_headline, (headlineX, headlineY))
     if headline == 7:
         screen.blit(half_headline, (headlineX, headlineY))
+    if headline == 8:
+        screen.blit(full_headline, (headlineX, headlineY))
+    if headline == 9:
+        screen.blit(planetary_headline, (headlineX, headlineY))
+    if headline == 10:
+        screen.blit(mars_headline, (headlineX, headlineY))
 
 
 running = True
