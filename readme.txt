@@ -1,7 +1,7 @@
 Welcome to Plague Clicker! You are a plague-like virus, and you have to
 spread as much as you can! The game is pretty self explanatory, have fun!
 
- - Omar
+ 
 ====
 INSTALLATION GUIDE:
 
